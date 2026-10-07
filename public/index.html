@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Launch Window — a 52-week trajectory lab proving that shipping skill compounds per rep while the model tide lifts everyone equally.">
+  <title>Launch Window — Ai Will Keep Getting Better The Question Is Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+<!-- pb-shell --><link rel="stylesheet" href="./pb-shell.css"><!-- pb-shell --><!-- pb-back --><link rel="stylesheet" href="./pb-back.css"><!-- pb-back --></head>
+<body>
+<a class="skip-link" href="#race">Skip to the race</a>
+<main>
+  <nav aria-label="Primary"><a aria-current="page" href="/">Lab</a><a href="/guide.html">Guide</a><a href="https://github.com/anhquanbd2021/ai-will-keep-getting-better-the-question-is">Source</a></nav>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Launch Window · Trajectory Telemetry · 52 weeks</p>
+      <h1>The tide lifts everyone.<br>Only reps compound.</h1>
+      <p class="lede">Three engineers, one year, the same improving model. <em>Ship Weekly</em> flies every Friday. <em>Learn Only</em> reads every changelog and runs nothing. <em>Wait for Perfect</em> holds the pad "until it settles," then ships on the identical cadence — and never catches up.</p>
+    </div>
+    <p class="warning"><strong>Educational model.</strong> Every number is produced by a deterministic simulation running in your browser — no real engineers, no real models, nothing deployed.</p>
+  </header>
+
+  <section class="panel controls" aria-labelledby="run-title">
+    <div class="section-heading">
+      <div><p class="eyebrow">Mission parameters</p><h2 id="run-title">Set the race</h2></div>
+      <div class="button-row">
+        <button id="step-week" type="button">Step +1 week</button>
+        <button id="run-all" type="button">Run 52-week race</button>
+      </div>
+    </div>
+    <div class="slider-grid" role="group" aria-label="Simulation parameters">
+      <label class="slider-field" for="wait-weeks">
+        <span class="slider-label">Wait window <output id="wait-weeks-out" for="wait-weeks">16 wk</output></span>
+        <input type="range" id="wait-weeks" min="0" max="40" step="1" value="16">
+        <span class="slider-hint">Weeks <strong>Wait for Perfect</strong> holds the pad before its first ship.</span>
+      </label>
+      <label class="slider-field" for="learn-per-ship">
+        <span class="slider-label">Learn per ship <output id="learn-per-ship-out" for="learn-per-ship">0.10</output></span>
+        <input type="range" id="learn-per-ship" min="0" max="0.3" step="0.01" value="0.10">
+        <span class="slider-hint">Skill gained per shipped rep (+0.03 feedback once users exist).</span>
+      </label>
+      <label class="slider-field" for="model-gain">
+        <span class="slider-label">Model gain / week <output id="model-gain-out" for="model-gain">0.02</output></span>
+        <input type="range" id="model-gain" min="0" max="0.1" step="0.005" value="0.02">
+        <span class="slider-hint">The tide — multiplies everyone's output equally, every week.</span>
+      </label>
+    </div>
+    <p class="muted">Raise the tide and both curves climb — the absolute gap <em>widens</em>. The multiplier needs a base; zero stays zero.</p>
+  </section>
+
+  <section class="workspace" id="race" aria-label="Trajectory telemetry">
+    <section class="panel" aria-labelledby="chart-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Trajectory</p><h2 id="chart-title">Cumulative output over 52 weeks</h2></div>
+        <span id="met-clock" class="badge" role="status" aria-live="polite">T+00</span>
+      </div>
+      <div class="chart-wrap">
+        <svg id="chart" viewBox="0 0 720 320" role="img" aria-label="Line chart: cumulative output per week for the three engineers">
+          <g id="chart-grid"></g>
+          <g id="chart-wait"></g>
+          <g id="chart-tide"></g>
+          <g id="chart-lanes"></g>
+          <g id="chart-labels"></g>
+        </svg>
+      </div>
+      <ol id="lane-legend" class="legend" aria-label="Lane legend"></ol>
+    </section>
+    <section class="panel" aria-labelledby="verdict-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Verdict</p><h2 id="verdict-title">Stall report</h2></div>
+        <span id="catch-up" class="badge" role="status" aria-live="polite">—</span>
+      </div>
+      <dl class="telemetry" id="stall-report">
+        <div class="telemetry-row"><dt>Idle weeks on the pad</dt><dd id="stall-idle">—</dd></div>
+        <div class="telemetry-row"><dt>Ships during wait window</dt><dd id="stall-ships">—</dd></div>
+        <div class="telemetry-row"><dt>Gap when launch finally clears</dt><dd id="stall-gap-start">—</dd></div>
+        <div class="telemetry-row"><dt>Gap at T+52</dt><dd id="stall-gap-end">—</dd></div>
+      </dl>
+      <ol id="totals" class="totals" aria-label="Final totals per lane"></ol>
+      <p class="muted">The waiter's idle weeks are marked on the chart as on-pad hatching. Its ship cadence after liftoff is identical to the leader's — the gap is bought before it ever flies.</p>
+    </section>
+  </section>
+
+  <p class="closing-links"><a href="/guide.html">Read the mission guide</a><span class="sep" aria-hidden="true">·</span><a href="https://github.com/anhquanbd2021/ai-will-keep-getting-better-the-question-is">Inspect source and tests</a></p>
+</main>
+<script type="module" src="/app.js"></script>
+<!-- pb-shell --><a class="pb-shell" href="https://github.com/anhquanbd2021/ai-will-keep-getting-better-the-question-is" title="ai-will-keep-getting-better-the-question-is — an Article Playbook demo (view source)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="2" width="9" height="9" rx="2" fill="#2dd4bf"/><rect x="13" y="2" width="9" height="9" rx="2" fill="#2dd4bf" opacity=".45"/><rect x="2" y="13" width="9" height="9" rx="2" fill="#2dd4bf" opacity=".45"/><rect x="13" y="13" width="9" height="9" rx="4.5" fill="#2dd4bf"/></svg><b>ai-will-keep-getting-better-the-question-is</b><i>DEMO</i></a><!-- pb-shell --><!-- pb-back --><a class="pb-back" id="pb-back" href="https://github.com/anhquanbd2021/ai-will-keep-getting-better-the-question-is" title="Back to the article — ai-will-keep-getting-better-the-question-is">← Article <i>PLAYBOOK</i></a><script>(function(){var a=document.getElementById('pb-back');if(!a)return;var h=location.hostname;if(/^(localhost|127\.0\.0\.1|192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[01])\.)/.test(h)){a.href='//'+h+':'+(/^(localhost|127\.0\.0\.1)$/.test(h)?'1234':'30082')+'/microsites/article.html?slug=ai-will-keep-getting-better-the-question-is';}})();</script><!-- pb-back --></body>
+</html>

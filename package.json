@@ -1,0 +1,16 @@
+{
+  "name": "ai-will-keep-getting-better-the-question-is-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Ai Will Keep Getting Better The Question Is Lab — companion interactive demo",
+  "scripts": {
+    "start": "node app/server.js",
+    "race": "node scripts/race.mjs",
+    "test": "node --test \"test/*.test.mjs\"",
+    "check": "npm test"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

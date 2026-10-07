@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Guide to the Launch Window lab — what each lane, control, and readout proves about compounding skill.">
+<title>Launch Window Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/styles.css">
+<!-- pb-shell --><link rel="stylesheet" href="./pb-shell.css"><!-- pb-shell --><!-- pb-back --><link rel="stylesheet" href="./pb-back.css"><!-- pb-back --></head>
+<body>
+<a class="skip-link" href="#guide-start">Skip to the guide</a>
+<main>
+  <nav aria-label="Primary"><a href="/">Lab</a><a aria-current="page" href="/guide.html">Guide</a><a href="https://github.com/anhquanbd2021/ai-will-keep-getting-better-the-question-is">Source</a></nav>
+
+  <header class="guide-intro" id="guide-start">
+    <p class="eyebrow">Mission guide</p>
+    <h1>Three lanes, one tide, one verdict</h1>
+    <p class="lede">The lab runs a 52-week race between three identical engineers who differ only in when their reps start. This page maps every lane, control, and readout to the claim it proves.</p>
+    <p class="warning"><strong>Honest limits.</strong> The model is deliberately simple — linear skill gain, a smooth exponential tide. Real careers are noisier, which makes the mechanism harder to see, not weaker.</p>
+  </header>
+
+  <section class="panel">
+    <p class="eyebrow">Start here</p>
+    <h2>What this demo proves</h2>
+    <p>Skill and output compound <em>per shipped iteration</em>; the model's improvement is a flat multiplier applied to everyone equally. Press <strong>Run 52-week race</strong>: the ship-weekly lane finishes far ahead, the learn-only lane drifts, and the wait-perfect lane — identical cadence, delayed start — earns a <strong>CATCH-UP: NEVER</strong> stamp. Then raise <em>Model gain / week</em>: the tide lifts every lane and widens the absolute gap.</p>
+    <p><a class="try" href="/">Open the lab</a></p>
+  </section>
+
+  <section class="guide-section">
+    <p class="eyebrow">The lanes</p>
+    <h2>Three engineers, three trajectories</h2>
+    <div class="control-grid">
+      <article class="panel control"><span class="control-number">Lane 01</span><h3>Ship Weekly</h3><p>Ships one rep every week from week 1. Each ship adds <code>learnPerShip</code> to skill; from the second ship on, real-user feedback adds <code>feedbackBonus</code> too.</p><dl><dt>Proves</dt><dd>reps, not elapsed time, are the compounding base.</dd><dt>Key detail</dt><dd>52 ships by T+52 — feedback bonus active from week 2.</dd></dl></article>
+      <article class="panel control"><span class="control-number">Lane 02</span><h3>Learn Only</h3><p>Consumes every release note and eval, runs nothing. Skill drifts up by <code>learnOnlyDrift</code> (0.005) weekly, but no ship means no feedback and no multiplier base.</p><dl><dt>Proves</dt><dd>changelog fluency is not building skill.</dd><dt>Key detail</dt><dd>finishes with real skill but a fraction of the output.</dd></dl></article>
+      <article class="panel control"><span class="control-number">Lane 03</span><h3>Wait for Perfect</h3><p>Holds the pad for the configurable wait window — rusting at <code>rustPerIdleWeek</code> per week — then ships on the identical weekly cadence.</p><dl><dt>Proves</dt><dd>the failure mode: a delayed start buys a gap that never closes.</dd><dt>Key detail</dt><dd><code>catchUpWeek</code> returns <code>null</code> — stamped NEVER.</dd></dl></article>
+    </div>
+  </section>
+
+  <section class="guide-section">
+    <p class="eyebrow">The controls</p>
+    <h2>Mission parameters</h2>
+    <div class="control-grid">
+      <article class="panel control"><span class="control-number">Control 01</span><h3>Wait window</h3><p>Weeks the waiter idles before its first ship — the "once the tooling settles" delay, adjustable from 0 to 40.</p><dl><dt>Proves</dt><dd>waiting is a renewable decision; every extra idle week deepens the hole.</dd><dt>Key detail</dt><dd>idle weeks apply rust, so the waiter starts <em>below</em> its launch skill.</dd></dl></article>
+      <article class="panel control"><span class="control-number">Control 02</span><h3>Learn per ship</h3><p>Skill gained per shipped rep — the strength of the practice effect.</p><dl><dt>Proves</dt><dd>even a small per-rep gain, compounded weekly, dominates any head start in reading.</dd><dt>Key detail</dt><dd>set it to 0 and the lanes collapse — reps are the engine.</dd></dl></article>
+      <article class="panel control"><span class="control-number">Control 03</span><h3>Model gain / week</h3><p>The tide: <code>(1 + gain) ** week</code>, multiplying everyone's weekly output identically.</p><dl><dt>Proves</dt><dd>a rising tide does not rescue the waiter — it multiplies whatever base exists.</dd><dt>Key detail</dt><dd>the cyan dashed line on the chart; equal for all three lanes.</dd></dl></article>
+      <article class="panel control"><span class="control-number">Control 04</span><h3>Step mode</h3><p><strong>Step +1 week</strong> advances the race one frame at a time — the same <code>stepWeek</code> transition that drives the article's animated figure.</p><dl><dt>Proves</dt><dd>the divergence is invisible early: at T+04 the lanes look tied.</dd><dt>Key detail</dt><dd>every transition is pure and deterministic — same inputs, same race.</dd></dl></article>
+    </div>
+  </section>
+
+  <section class="guide-section">
+    <p class="eyebrow">The readouts</p>
+    <h2>Telemetry</h2>
+    <div class="control-grid">
+      <article class="panel control"><span class="control-number">Readout 01</span><h3>MET clock</h3><p>Mission-elapsed-time chip, <code>T+WW</code>, tracking the current week during step mode.</p><dl><dt>Proves</dt><dd>the clock runs whether you fly or hold the pad.</dd><dt>Key detail</dt><dd>the horizon is fixed at 52 — weeks idle are weeks spent.</dd></dl></article>
+      <article class="panel control"><span class="control-number">Readout 02</span><h3>Stall report</h3><p>Evidence on the wait-perfect lane: idle weeks, ships during the wait window (always 0), and the output gap at launch and at T+52.</p><dl><dt>Proves</dt><dd>the gap widens after liftoff even on identical cadence.</dd><dt>Key detail</dt><dd><code>stallReport(sim)</code> — same function the tests assert on.</dd></dl></article>
+      <article class="panel control"><span class="control-number">Readout 03</span><h3>Catch-up stamp</h3><p>The first week the waiter's cumulative output reaches the leader's — or <strong>CATCH-UP: NEVER</strong> when <code>catchUpWeek</code> returns <code>null</code>.</p><dl><dt>Proves</dt><dd>inside a fixed horizon, a late start can be mathematically unclosable.</dd><dt>Key detail</dt><dd>under default parameters the verdict is always NEVER.</dd></dl></article>
+    </div>
+  </section>
+
+  <section class="guide-section">
+    <p class="eyebrow">Architecture</p>
+    <h2>How the demo is built</h2>
+    <div class="table-wrap panel" tabindex="0" role="region" aria-label="Architecture table — layer, behavior, evidence">
+      <table>
+        <thead><tr><th>Layer</th><th>Behavior</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Model</td><td>Pure week-by-week transitions: ship weeks compound skill, idle weeks rust it, the tide multiplies output.</td><td><code>public/lab.mjs</code></td></tr>
+          <tr><td>UI</td><td>Plain-JS DOM wiring — sliders, SVG trajectory chart, step mode — importing the same module the tests use.</td><td><code>public/app.js</code></td></tr>
+          <tr><td>Server</td><td>Zero-dependency static host plus <code>/health</code>, <code>/version</code>, and <code>/api/simulate</code>.</td><td><code>app/server.js</code></td></tr>
+          <tr><td>CLI</td><td>Prints the weekly race table and the stall report in any terminal.</td><td><code>scripts/race.mjs</code></td></tr>
+          <tr><td>Tests</td><td>Unit tests on the step math and the failure mode; e2e tests boot the real server and fetch every asset.</td><td><code>test/</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="guide-section">
+    <p class="eyebrow">Run locally</p>
+    <h2>Inspect the evidence</h2>
+    <pre class="code-block">npm start        # serve the lab on :3000
+npm test         # unit tests + end-to-end server suite
+npm run race     # CLI: weekly table + stall report
+npm run check    # both</pre>
+    <p>Try <code>node scripts/race.mjs --wait=24</code> to deepen the stall, or <code>--gain=0.05</code> to watch the tide widen the gap.</p>
+  </section>
+
+  <section class="guide-section panel">
+    <p class="eyebrow">Limits</p>
+    <h2>What this demo does not claim</h2>
+    <ul>
+      <li>Skill gain is linear per rep; real learning curves bend both ways.</li>
+      <li>The tide is a smooth exponential; real model releases arrive in jumps.</li>
+      <li>Output is cumulative with no market noise, luck, or distribution effects.</li>
+      <li>Three stylized lanes stand in for real careers — the mechanism is the point, not the magnitudes.</li>
+      <li>A "ship" counts any rep; the model says nothing about which rep is worth shipping.</li>
+    </ul>
+    <p><a class="try" href="/">Return to Lab</a></p>
+  </section>
+</main>
+<!-- pb-shell --><a class="pb-shell" href="https://github.com/anhquanbd2021/ai-will-keep-getting-better-the-question-is" title="ai-will-keep-getting-better-the-question-is — an Article Playbook demo (view source)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="2" width="9" height="9" rx="2" fill="#2dd4bf"/><rect x="13" y="2" width="9" height="9" rx="2" fill="#2dd4bf" opacity=".45"/><rect x="2" y="13" width="9" height="9" rx="2" fill="#2dd4bf" opacity=".45"/><rect x="13" y="13" width="9" height="9" rx="4.5" fill="#2dd4bf"/></svg><b>ai-will-keep-getting-better-the-question-is</b><i>DEMO</i></a><!-- pb-shell --><!-- pb-back --><a class="pb-back" id="pb-back" href="https://github.com/anhquanbd2021/ai-will-keep-getting-better-the-question-is" title="Back to the article — ai-will-keep-getting-better-the-question-is">← Article <i>PLAYBOOK</i></a><script>(function(){var a=document.getElementById('pb-back');if(!a)return;var h=location.hostname;if(/^(localhost|127\.0\.0\.1|192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[01])\.)/.test(h)){a.href='//'+h+':'+(/^(localhost|127\.0\.0\.1)$/.test(h)?'1234':'30082')+'/microsites/article.html?slug=ai-will-keep-getting-better-the-question-is';}})();</script><!-- pb-back --></body>
+</html>
